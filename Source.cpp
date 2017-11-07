@@ -53,6 +53,7 @@ int main()
 	}
 
 	//Calculate Distance
+	//This is just for testing output
 	for (unsigned int i = 0; i < rows; i++) {
 		for (unsigned int j = 0; j < cols; j++) {
 			cout << arr[i][j];
