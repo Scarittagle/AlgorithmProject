@@ -8,13 +8,13 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
 int main()
 {
 	unsigned int rows = 0, cols = 0;
-	int test = 0;
 	//Read input file
 	ifstream inputFile;
 	inputFile.open("input.txt");
@@ -53,13 +53,147 @@ int main()
 	}
 
 	//Calculate Distance
-	//This is just for testing output
-	for (unsigned int i = 0; i < rows; i++) {
-		for (unsigned int j = 0; j < cols; j++) {
-			cout << arr[i][j];
+	//locate row to the bottom
+	unsigned int i = rows - 1;
+	//Allocate vector array to store the result
+	vector <string> output;
+	for (unsigned int j = 0; j < cols; j++) {
+		double temp = double(arr[i][j]);
+		while (i >= 0) {
+			if (i - 1 == 0) { // first location to cross in diagonal won't be paying penalty
+				if (j > 0 && j < cols) { //add left, top, right
+					//Compare smallest 
+					int smallest = arr[i - 1][j - 1]; //default smallest value is left
+					int smallestColIndex = j - 1; //default smallest index is in left
+					string direction = "SE"; //default direction is to SE
+					if (smallest > arr[i - 1][j]) { //compare top
+						smallest = arr[i - 1][j];
+						smallestColIndex = j;
+						direction = "S";
+					}
+					if (smallest > arr[i - 1][j + 1]) { //compare right
+						smallest = arr[i - 1][j + 1];
+						smallestColIndex = j + 1;
+						direction = "SW";
+					}
+					//add smallest to temp
+					temp += smallest;
+					//save direction to array
+					output.push_back(direction);
+					output.push_back(" ");
+					//also the starting index of col
+					string TopColIndex = to_string(smallestColIndex);
+					output.push_back(TopColIndex);
+				}
+				else if (j == 0) {//add top, right
+					//Compare smallest 
+					int smallest = arr[i - 1][j]; //default smallest value is top
+					int smallestColIndex = j; //default smallest index is in top
+					string direction = "S"; //default direction is to S
+					if (smallest > arr[i - 1][j + 1]) { //compare right
+						smallest = arr[i - 1][j + 1];
+						smallestColIndex = j + 1;
+						direction = "SW";
+					}
+					//add smallest to temp
+					temp += smallest;
+					//save direction to array
+					output.push_back(direction);
+					output.push_back(" ");
+					//also the starting index of col
+					string TopColIndex = to_string(smallestColIndex);
+					output.push_back(TopColIndex);
+				}
+				else if (j == cols) {//add top, left
+					//Compare smallest 
+					int smallest = arr[i - 1][j]; //default smallest value is top
+					int smallestColIndex = j; //default smallest index is in top
+					string direction = "S"; //default direction is to S
+					if (smallest > arr[i - 1][j - 1]) { //compare left
+						smallest = arr[i - 1][j - 1];
+						smallestColIndex = j - 1;
+						direction = "SE";
+					}
+					//add smallest to temp
+					temp += smallest;
+					//save direction to array
+					output.push_back(direction);
+					output.push_back(" ");
+					//also the starting index of col
+					string TopColIndex = to_string(smallestColIndex);
+					output.push_back(TopColIndex);
+				}
+			}
+			//after first location it will pay 40% penalty with diagonal move.
+			else { 
+				if (j > 0 && j < cols) {
+					//add left, top, right
+					//Compare smallest 
+					double smallest = double(arr[i - 1][j - 1]) + (double(arr[i - 1][j - 1]) * (0.4)); //default smallest value is left
+					int smallestColIndex = j - 1; //default smallest index is in left
+					string direction = "SE"; //default direction is to SE
+					if (smallest > double(arr[i - 1][j])) { //compare top
+						smallest = double(arr[i - 1][j]);
+						smallestColIndex = j;
+						direction = "S";
+					}
+					if (smallest > (double(arr[i - 1][j + 1]) + (double(arr[i - 1][j + 1]) * (0.4)))) { //compare right
+						smallest = double(arr[i - 1][j + 1]) + ((arr[i - 1][j + 1]) * (0.4));
+						smallestColIndex = j + 1;
+						direction = "SW";
+					}
+					//add smallest to temp
+					temp += smallest;
+					//save direction to array
+					output.push_back(direction);
+					output.push_back(" ");
+				}
+				else if (j == 0) {
+					//add top, right
+					double smallest = double(arr[i - 1][j]); //default smallest value is top
+					int smallestColIndex = j; //default smallest index is in top
+					string direction = "S"; //default direction is to S
+					if (smallest > (double(arr[i - 1][j + 1]) + (double(arr[i - 1][j + 1]) * (0.4)))) { //compare right
+						smallest = double(arr[i - 1][j + 1]) + (double(arr[i - 1][j + 1]) * (0.4));
+						smallestColIndex = j + 1;
+						direction = "SW";
+					}
+					//add smallest to temp
+					temp += smallest;
+					//save direction to array
+					output.push_back(direction);
+					output.push_back(" ");
+				}
+				else if (j == cols) {
+					//add top, left
+					//Compare smallest 
+					double smallest = double(arr[i - 1][j]); //default smallest value is top
+					int smallestColIndex = j; //default smallest index is in top
+					string direction = "S"; //default direction is to S
+					if (smallest > (double(arr[i - 1][j - 1]) + (double(arr[i - 1][j - 1]) * (0.4)))) { //compare left
+						smallest = (double(arr[i - 1][j - 1]) + (double(arr[i - 1][j - 1]) * (0.4)));
+						smallestColIndex = j - 1;
+						direction = "SE";
+					}
+					//add smallest to temp
+					temp += smallest;
+					//save direction to array
+					output.push_back(direction);
+					output.push_back(" ");
+				}
+			}
+			i--;
 		}
+		//print the array in reverse order
+		for (vector<string>::reverse_iterator i = output.rbegin(); i != output.rend(); ++i) {
+			cout << *i;
+		}
+		cout << "\n";
+		//Empty out the vector array
+		output.clear();
 	}
-	
+
+
 
 	//Deallocate the memory
 	for (unsigned int i = 0; i < rows; i++)
@@ -68,7 +202,6 @@ int main()
 	}
 	delete[] arr;
 
-	cin.ignore();
-	cin.get();
+	//cin.get();
 	return 0;
 }
