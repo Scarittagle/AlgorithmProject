@@ -78,6 +78,7 @@ int main()
 					}
 					//add smallest to temp
 					temp += smallest;
+					j = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
@@ -97,6 +98,7 @@ int main()
 					}
 					//add smallest to temp
 					temp += smallest;
+					j = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
@@ -116,6 +118,7 @@ int main()
 					}
 					//add smallest to temp
 					temp += smallest;
+					j = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
@@ -144,6 +147,7 @@ int main()
 					}
 					//add smallest to temp
 					temp += smallest;
+					j = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
@@ -160,6 +164,7 @@ int main()
 					}
 					//add smallest to temp
 					temp += smallest;
+					j = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
@@ -177,6 +182,7 @@ int main()
 					}
 					//add smallest to temp
 					temp += smallest;
+					j = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
