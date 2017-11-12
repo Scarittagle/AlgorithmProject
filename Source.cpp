@@ -95,11 +95,11 @@ int main()
 				}
 				else if (s == 0) {//add top, right
 					//Compare smallest 
-					int smallest = arr[i - 1][s]; //default smallest value is top
+					int smallest = arr[i][s]; //default smallest value is top
 					int smallestColIndex = s; //default smallest index is in top
 					string direction = "S"; //default direction is to S
-					if (smallest > arr[i - 1][s + 1]) { //compare right
-						smallest = arr[i - 1][s + 1];
+					if (smallest > arr[i][s + 1]) { //compare right
+						smallest = arr[i][s + 1];
 						smallestColIndex = s + 1;
 						direction = "SW";
 					}
@@ -117,11 +117,11 @@ int main()
 				}
 				else if (s == cols) {//add top, left
 					//Compare smallest 
-					int smallest = arr[i - 1][s]; //default smallest value is top
+					int smallest = arr[i][s]; //default smallest value is top
 					int smallestColIndex = s; //default smallest index is in top
 					string direction = "S"; //default direction is to S
-					if (smallest > arr[i - 1][s - 1]) { //compare left
-						smallest = arr[i - 1][s - 1];
+					if (smallest > arr[i][s - 1]) { //compare left
+						smallest = arr[i][s - 1];
 						smallestColIndex = s - 1;
 						direction = "SE";
 					}
