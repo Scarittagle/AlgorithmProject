@@ -55,30 +55,35 @@ int main()
 	//Calculate Distance
 	//locate row to the bottom
 	unsigned int i = rows - 1;
+	//Set Penalty Value
+	double penalty = 0.4;
+	//
+	unsigned int s = 0;
 	//Allocate vector array to store the result
 	vector <string> output;
 	for (unsigned int j = 0; j < cols; j++) {
 		double temp = double(arr[i][j]);
+		s = j;
 		while (i >= 0) {
 			if (i - 1 == 0) { // first location to cross in diagonal won't be paying penalty
-				if (j > 0 && j < cols) { //add left, top, right
+				if (s > 0 && s < cols) { //add left, top, right
 					//Compare smallest 
-					int smallest = arr[i - 1][j - 1]; //default smallest value is left
-					int smallestColIndex = j - 1; //default smallest index is in left
+					int smallest = arr[i - 1][s - 1]; //default smallest value is left
+					int smallestColIndex = s - 1; //default smallest index is in left
 					string direction = "SE"; //default direction is to SE
-					if (smallest > arr[i - 1][j]) { //compare top
-						smallest = arr[i - 1][j];
-						smallestColIndex = j;
+					if (smallest > arr[i - 1][s]) { //compare top
+						smallest = arr[i - 1][s];
+						smallestColIndex = s;
 						direction = "S";
 					}
-					if (smallest > arr[i - 1][j + 1]) { //compare right
-						smallest = arr[i - 1][j + 1];
-						smallestColIndex = j + 1;
+					if (smallest > arr[i - 1][s + 1]) { //compare right
+						smallest = arr[i - 1][s + 1];
+						smallestColIndex = s + 1;
 						direction = "SW";
 					}
 					//add smallest to temp
 					temp += smallest;
-					j = smallestColIndex;
+					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
@@ -86,19 +91,19 @@ int main()
 					string TopColIndex = to_string(smallestColIndex);
 					output.push_back(TopColIndex);
 				}
-				else if (j == 0) {//add top, right
+				else if (s == 0) {//add top, right
 					//Compare smallest 
-					int smallest = arr[i - 1][j]; //default smallest value is top
-					int smallestColIndex = j; //default smallest index is in top
+					int smallest = arr[i - 1][s]; //default smallest value is top
+					int smallestColIndex = s; //default smallest index is in top
 					string direction = "S"; //default direction is to S
-					if (smallest > arr[i - 1][j + 1]) { //compare right
-						smallest = arr[i - 1][j + 1];
-						smallestColIndex = j + 1;
+					if (smallest > arr[i - 1][s + 1]) { //compare right
+						smallest = arr[i - 1][s + 1];
+						smallestColIndex = s + 1;
 						direction = "SW";
 					}
 					//add smallest to temp
 					temp += smallest;
-					j = smallestColIndex;
+					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
@@ -106,19 +111,19 @@ int main()
 					string TopColIndex = to_string(smallestColIndex);
 					output.push_back(TopColIndex);
 				}
-				else if (j == cols) {//add top, left
+				else if (s == cols) {//add top, left
 					//Compare smallest 
-					int smallest = arr[i - 1][j]; //default smallest value is top
-					int smallestColIndex = j; //default smallest index is in top
+					int smallest = arr[i - 1][s]; //default smallest value is top
+					int smallestColIndex = s; //default smallest index is in top
 					string direction = "S"; //default direction is to S
-					if (smallest > arr[i - 1][j - 1]) { //compare left
-						smallest = arr[i - 1][j - 1];
-						smallestColIndex = j - 1;
+					if (smallest > arr[i - 1][s - 1]) { //compare left
+						smallest = arr[i - 1][s - 1];
+						smallestColIndex = s - 1;
 						direction = "SE";
 					}
 					//add smallest to temp
 					temp += smallest;
-					j = smallestColIndex;
+					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
@@ -129,60 +134,60 @@ int main()
 			}
 			//after first location it will pay 40% penalty with diagonal move.
 			else { 
-				if (j > 0 && j < cols) {
+				if (s > 0 && s < cols) {
 					//add left, top, right
-					//Compare smallest 
-					double smallest = double(arr[i - 1][j - 1]) + (double(arr[i - 1][j - 1]) * (0.4)); //default smallest value is left
-					int smallestColIndex = j - 1; //default smallest index is in left
+					//Compare smallest
+					double smallest = double(arr[i - 1][s - 1]) + (double(arr[i - 1][s - 1]) * penalty); //default smallest value is left
+					int smallestColIndex = s - 1; //default smallest index is in left
 					string direction = "SE"; //default direction is to SE
-					if (smallest > double(arr[i - 1][j])) { //compare top
-						smallest = double(arr[i - 1][j]);
-						smallestColIndex = j;
+					if (smallest > double(arr[i - 1][s])) { //compare top
+						smallest = double(arr[i - 1][s]);
+						smallestColIndex = s;
 						direction = "S";
 					}
-					if (smallest > (double(arr[i - 1][j + 1]) + (double(arr[i - 1][j + 1]) * (0.4)))) { //compare right
-						smallest = double(arr[i - 1][j + 1]) + ((arr[i - 1][j + 1]) * (0.4));
-						smallestColIndex = j + 1;
+					if (smallest > (double(arr[i - 1][s + 1]) + (double(arr[i - 1][s + 1]) * penalty))) { //compare right
+						smallest = double(arr[i - 1][s + 1]) + (double(arr[i - 1][s + 1]) * penalty);
+						smallestColIndex = s + 1;
 						direction = "SW";
 					}
 					//add smallest to temp
 					temp += smallest;
-					j = smallestColIndex;
+					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
 				}
-				else if (j == 0) {
+				else if (s == 0) {
 					//add top, right
-					double smallest = double(arr[i - 1][j]); //default smallest value is top
-					int smallestColIndex = j; //default smallest index is in top
+					double smallest = double(arr[i - 1][s]); //default smallest value is top
+					int smallestColIndex = s; //default smallest index is in top
 					string direction = "S"; //default direction is to S
-					if (smallest > (double(arr[i - 1][j + 1]) + (double(arr[i - 1][j + 1]) * (0.4)))) { //compare right
-						smallest = double(arr[i - 1][j + 1]) + (double(arr[i - 1][j + 1]) * (0.4));
-						smallestColIndex = j + 1;
+					if (smallest > (double(arr[i - 1][s + 1]) + (double(arr[i - 1][s + 1]) * penalty))) { //compare right
+						smallest = double(arr[i - 1][s + 1]) + (double(arr[i - 1][s + 1]) * penalty);
+						smallestColIndex = s + 1;
 						direction = "SW";
 					}
 					//add smallest to temp
 					temp += smallest;
-					j = smallestColIndex;
+					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
 				}
-				else if (j == cols) {
+				else if (s == cols) {
 					//add top, left
 					//Compare smallest 
-					double smallest = double(arr[i - 1][j]); //default smallest value is top
-					int smallestColIndex = j; //default smallest index is in top
+					double smallest = double(arr[i - 1][s]); //default smallest value is top
+					int smallestColIndex = s; //default smallest index is in top
 					string direction = "S"; //default direction is to S
-					if (smallest > (double(arr[i - 1][j - 1]) + (double(arr[i - 1][j - 1]) * (0.4)))) { //compare left
-						smallest = (double(arr[i - 1][j - 1]) + (double(arr[i - 1][j - 1]) * (0.4)));
-						smallestColIndex = j - 1;
+					if (smallest > (double(arr[i - 1][s - 1]) + (double(arr[i - 1][s - 1]) * penalty))) { //compare left
+						smallest = (double(arr[i - 1][s - 1]) + (double(arr[i - 1][s - 1]) * penalty));
+						smallestColIndex = s - 1;
 						direction = "SE";
 					}
 					//add smallest to temp
 					temp += smallest;
-					j = smallestColIndex;
+					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
 					output.push_back(" ");
