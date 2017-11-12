@@ -65,19 +65,19 @@ int main()
 		double temp = double(arr[i][j]);
 		s = j;
 		while (i >= 0) {
-			if (i - 1 == 0) { // first location to cross in diagonal won't be paying penalty
+			if (i == 0) { // first location to cross in diagonal won't be paying penalty
 				if (s > 0 && s < cols) { //add left, top, right
 					//Compare smallest 
-					int smallest = arr[i - 1][s - 1]; //default smallest value is left
+					int smallest = arr[i][s - 1]; //default smallest value is left
 					int smallestColIndex = s - 1; //default smallest index is in left
 					string direction = "SE"; //default direction is to SE
-					if (smallest > arr[i - 1][s]) { //compare top
-						smallest = arr[i - 1][s];
+					if (smallest > arr[i][s]) { //compare top
+						smallest = arr[i][s];
 						smallestColIndex = s;
 						direction = "S";
 					}
-					if (smallest > arr[i - 1][s + 1]) { //compare right
-						smallest = arr[i - 1][s + 1];
+					if (smallest > arr[i][s + 1]) { //compare right
+						smallest = arr[i][s + 1];
 						smallestColIndex = s + 1;
 						direction = "SW";
 					}
@@ -90,6 +90,8 @@ int main()
 					//also the starting index of col
 					string TopColIndex = to_string(smallestColIndex);
 					output.push_back(TopColIndex);
+					//break out of while loop
+					break;
 				}
 				else if (s == 0) {//add top, right
 					//Compare smallest 
@@ -110,6 +112,8 @@ int main()
 					//also the starting index of col
 					string TopColIndex = to_string(smallestColIndex);
 					output.push_back(TopColIndex);
+					//break out of while loop
+					break;
 				}
 				else if (s == cols) {//add top, left
 					//Compare smallest 
@@ -130,6 +134,8 @@ int main()
 					//also the starting index of col
 					string TopColIndex = to_string(smallestColIndex);
 					output.push_back(TopColIndex);
+					//break out of while loop
+					break;
 				}
 			}
 			//after first location it will pay 40% penalty with diagonal move.
@@ -193,8 +199,12 @@ int main()
 					output.push_back(" ");
 				}
 			}
-			i--;
+			if (i != 0) {
+				i--;
+			}
 		}
+		//reset Col index
+		i = rows - 1;
 		//print the array in reverse order
 		for (vector<string>::reverse_iterator i = output.rbegin(); i != output.rend(); ++i) {
 			cout << *i;
