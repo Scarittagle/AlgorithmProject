@@ -57,35 +57,39 @@ int main()
 	unsigned int i = rows - 1;
 	//Set Penalty Value
 	double penalty = 0.4;
-	//
+	//For distinguish for loop iter
 	unsigned int s = 0;
+	//For reseting row index
+	unsigned int r = i;
 	//Allocate vector array to store the result
 	vector <string> output;
 	for (unsigned int j = 0; j < cols; j++) {
 		double temp = double(arr[i][j]);
+		//Col op
 		s = j;
-		while (i >= 0) {
-			if (i == 0) { // first location to cross in diagonal won't be paying penalty
+		while (r >= 0) {
+			if (r == 1) { // first location to cross in diagonal won't be paying penalty
 				if (s > 0 && s < cols) { //add left, top, right
 					//Compare smallest 
-					int smallest = arr[i][s - 1]; //default smallest value is left
+					double smallest = (temp + arr[r - 1][s - 1]); //default smallest value is left
 					int smallestColIndex = s - 1; //default smallest index is in left
 					string direction = "SE"; //default direction is to SE
-					if (smallest > arr[i][s]) { //compare top
-						smallest = arr[i][s];
+					if (smallest >(temp + arr[r - 1][s])) { //compare top
+						smallest = (temp + arr[r - 1][s]);
 						smallestColIndex = s;
 						direction = "S";
 					}
-					if (smallest > arr[i][s + 1]) { //compare right
-						smallest = arr[i][s + 1];
+					if (smallest > (temp + arr[r - 1][s + 1])) { //compare right
+						smallest = (temp + arr[r - 1][s + 1]);
 						smallestColIndex = s + 1;
 						direction = "SW";
 					}
-					//add smallest to temp
-					temp += smallest;
+					//
+					temp = smallest;
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
+					cout << direction << endl;
 					output.push_back(" ");
 					//also the starting index of col
 					string TopColIndex = to_string(smallestColIndex);
@@ -95,19 +99,20 @@ int main()
 				}
 				else if (s == 0) {//add top, right
 					//Compare smallest 
-					int smallest = arr[i][s]; //default smallest value is top
+					double smallest = (temp + arr[r - 1][s]); //default smallest value is top
 					int smallestColIndex = s; //default smallest index is in top
 					string direction = "S"; //default direction is to S
-					if (smallest > arr[i][s + 1]) { //compare right
-						smallest = arr[i][s + 1];
+					if (smallest > (temp + arr[r - 1][s + 1])) { //compare right
+						smallest = (temp + arr[r - 1][s + 1]);
 						smallestColIndex = s + 1;
 						direction = "SW";
 					}
-					//add smallest to temp
-					temp += smallest;
+					//
+					temp = smallest;
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
+					cout << direction << endl;
 					output.push_back(" ");
 					//also the starting index of col
 					string TopColIndex = to_string(smallestColIndex);
@@ -117,19 +122,20 @@ int main()
 				}
 				else if (s == cols) {//add top, left
 					//Compare smallest 
-					int smallest = arr[i][s]; //default smallest value is top
+					double smallest = (temp + arr[r - 1][s]); //default smallest value is top
 					int smallestColIndex = s; //default smallest index is in top
 					string direction = "S"; //default direction is to S
-					if (smallest > arr[i][s - 1]) { //compare left
-						smallest = arr[i][s - 1];
+					if (smallest > (temp + arr[r - 1][s - 1])) { //compare left
+						smallest = (temp + arr[r - 1][s - 1]);
 						smallestColIndex = s - 1;
 						direction = "SE";
 					}
-					//add smallest to temp
-					temp += smallest;
+					//
+					temp = smallest;
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
+					cout << direction << endl;
 					output.push_back(" ");
 					//also the starting index of col
 					string TopColIndex = to_string(smallestColIndex);
@@ -143,68 +149,71 @@ int main()
 				if (s > 0 && s < cols) {
 					//add left, top, right
 					//Compare smallest
-					double smallest = double(arr[i - 1][s - 1]) + (double(arr[i - 1][s - 1]) * penalty); //default smallest value is left
+					double smallest = temp + (double(arr[r - 1][s - 1]) + (double(arr[r - 1][s - 1]) * penalty)); //default smallest value is left
 					int smallestColIndex = s - 1; //default smallest index is in left
 					string direction = "SE"; //default direction is to SE
-					if (smallest > double(arr[i - 1][s])) { //compare top
-						smallest = double(arr[i - 1][s]);
+					if (smallest > (temp + double(arr[r - 1][s]))) { //compare top
+						smallest = (temp + double(arr[r - 1][s]));
 						smallestColIndex = s;
 						direction = "S";
 					}
-					if (smallest > (double(arr[i - 1][s + 1]) + (double(arr[i - 1][s + 1]) * penalty))) { //compare right
-						smallest = double(arr[i - 1][s + 1]) + (double(arr[i - 1][s + 1]) * penalty);
+					if (smallest > (temp + (double(arr[r - 1][s + 1]) + (double(arr[r - 1][s + 1]) * penalty)))) { //compare right
+						smallest = (temp + (double(arr[r - 1][s + 1]) + (double(arr[r - 1][s + 1]) * penalty)));
 						smallestColIndex = s + 1;
 						direction = "SW";
 					}
-					//add smallest to temp
-					temp += smallest;
+					//
+					temp = smallest;
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
+					cout << direction << endl;
 					output.push_back(" ");
 				}
 				else if (s == 0) {
 					//add top, right
-					double smallest = double(arr[i - 1][s]); //default smallest value is top
+					double smallest = temp + (double(arr[r - 1][s])); //default smallest value is top
 					int smallestColIndex = s; //default smallest index is in top
 					string direction = "S"; //default direction is to S
-					if (smallest > (double(arr[i - 1][s + 1]) + (double(arr[i - 1][s + 1]) * penalty))) { //compare right
-						smallest = double(arr[i - 1][s + 1]) + (double(arr[i - 1][s + 1]) * penalty);
+					if (smallest > (temp + (double(arr[r - 1][s + 1]) + (double(arr[r - 1][s + 1]) * penalty)))) { //compare right
+						smallest = (temp + (double(arr[r - 1][s + 1]) + (double(arr[r - 1][s + 1]) * penalty)));
 						smallestColIndex = s + 1;
 						direction = "SW";
 					}
-					//add smallest to temp
-					temp += smallest;
+					//
+					temp = smallest;
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
+					cout << direction << endl;
 					output.push_back(" ");
 				}
 				else if (s == cols) {
 					//add top, left
 					//Compare smallest 
-					double smallest = double(arr[i - 1][s]); //default smallest value is top
+					double smallest = (temp + double(arr[r - 1][s])); //default smallest value is top
 					int smallestColIndex = s; //default smallest index is in top
 					string direction = "S"; //default direction is to S
-					if (smallest > (double(arr[i - 1][s - 1]) + (double(arr[i - 1][s - 1]) * penalty))) { //compare left
-						smallest = (double(arr[i - 1][s - 1]) + (double(arr[i - 1][s - 1]) * penalty));
+					if (smallest > (temp + (double(arr[r - 1][s - 1]) + (double(arr[r - 1][s - 1]) * penalty)))) { //compare left
+						smallest = (temp + (double(arr[r - 1][s - 1]) + (double(arr[r - 1][s - 1]) * penalty)));
 						smallestColIndex = s - 1;
 						direction = "SE";
 					}
-					//add smallest to temp
-					temp += smallest;
+					//
+					temp = smallest;
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
+					cout << direction << endl;
 					output.push_back(" ");
 				}
 			}
-			if (i != 0) {
-				i--;
+			if (r != 0) {
+				r--;
 			}
 		}
-		//reset Col index
-		i = rows - 1;
+		//reset Row index
+		r = i;
 		//print the array in reverse order
 		for (vector<string>::reverse_iterator i = output.rbegin(); i != output.rend(); ++i) {
 			cout << *i;
@@ -223,6 +232,6 @@ int main()
 	}
 	delete[] arr;
 
-	//cin.get();
+	cin.get();
 	return 0;
 }
