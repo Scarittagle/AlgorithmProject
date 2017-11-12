@@ -89,7 +89,6 @@ int main()
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
-					cout << direction << endl;
 					output.push_back(" ");
 					//also the starting index of col
 					string TopColIndex = to_string(smallestColIndex);
@@ -112,7 +111,6 @@ int main()
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
-					cout << direction << endl;
 					output.push_back(" ");
 					//also the starting index of col
 					string TopColIndex = to_string(smallestColIndex);
@@ -135,7 +133,6 @@ int main()
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
-					cout << direction << endl;
 					output.push_back(" ");
 					//also the starting index of col
 					string TopColIndex = to_string(smallestColIndex);
@@ -167,7 +164,6 @@ int main()
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
-					cout << direction << endl;
 					output.push_back(" ");
 				}
 				else if (s == 0) {
@@ -185,7 +181,6 @@ int main()
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
-					cout << direction << endl;
 					output.push_back(" ");
 				}
 				else if (s == cols) {
@@ -204,7 +199,6 @@ int main()
 					s = smallestColIndex;
 					//save direction to array
 					output.push_back(direction);
-					cout << direction << endl;
 					output.push_back(" ");
 				}
 			}
